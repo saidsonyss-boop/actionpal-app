@@ -1,0 +1,17 @@
+{
+  "name": "actionpal-news-app",
+  "version": "1.0.0",
+  "description": "تطبيق إخباري لمنظمة مجموعة العمل من أجل فلسطينيي سورية - خادم وسيط يجلب الأخبار من actionpal.org.uk",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

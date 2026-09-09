@@ -29,10 +29,18 @@
   .status-line{ margin-top:10px; font-size:10.5px; color:var(--ink-soft); display:flex; align-items:center; justify-content:space-between; }
   .status-line a{ color:var(--red); font-weight:700; text-decoration:none; }
 
+  .view{ display:none; }
+  .view.active{ display:block; }
+
   .section{ padding:6px 18px 4px; }
   .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin:18px 0 12px; }
   .section-title{ font-family:'Markazi Text',serif; font-size:23px; font-weight:700; color:var(--charcoal); }
-  .section-link{ font-size:12px; font-weight:700; color:var(--red); text-decoration:none; }
+  .section-link{ font-size:12px; font-weight:700; color:var(--red); text-decoration:none; background:none; border:none; padding:0; font-family:'Tajawal',sans-serif; }
+
+  .chip-row{ display:flex; gap:8px; overflow-x:auto; padding:14px 18px 4px; scrollbar-width:none; }
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{ flex-shrink:0; padding:7px 15px; border-radius:999px; font-size:12.5px; font-weight:700; border:1px solid var(--line); background:var(--paper-raised); color:var(--ink-soft); white-space:nowrap; cursor:pointer; font-family:'Tajawal',sans-serif; }
+  .chip.active{ background:var(--red); border-color:var(--red); color:#fff; }
 
   .featured{ border-radius:16px; overflow:hidden; background:var(--paper-raised); border:1px solid var(--line-soft); }
   .featured-img{ height:168px; background-size:cover; background-position:center; background-color:var(--charcoal); position:relative; display:flex; align-items:flex-end; }
@@ -50,6 +58,7 @@
   .article-tag{ font-size:10.5px; font-weight:800; color:var(--red); margin-bottom:4px; display:block; }
   .article-title{ font-size:14px; font-weight:700; line-height:1.42; color:var(--ink); margin:0 0 5px; }
   .article-date{ font-size:11px; color:var(--ink-soft); }
+  .empty-note{ text-align:center; padding:30px 16px; color:var(--ink-soft); font-size:13px; }
 
   .skel{ background:linear-gradient(90deg,var(--line-soft) 25%,var(--line) 37%,var(--line-soft) 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; border-radius:8px; }
   @keyframes shimmer{ 0%{background-position:100% 50%;} 100%{background-position:0 50%;} }
@@ -64,9 +73,28 @@
   .about-card img{ width:96px; margin:0 auto 12px; display:block; }
   .about-card .org-ar{ font-size:16px; font-weight:800; color:var(--charcoal); line-height:1.4; }
   .about-card .org-en{ font-size:11.5px; color:var(--ink-soft); margin-top:4px; }
+  .about-desc{ margin:16px 18px 0; font-size:13.5px; line-height:1.9; color:var(--ink); background:var(--paper-raised); border:1px solid var(--line-soft); border-radius:14px; padding:16px; }
+  .about-links{ margin:14px 18px 0; display:flex; flex-direction:column; gap:10px; }
+  .about-link-btn{ display:flex; align-items:center; justify-content:space-between; background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:13px 16px; text-decoration:none; color:var(--ink); font-size:13.5px; font-weight:700; }
+  .about-link-btn span.arrow{ color:var(--red); font-weight:900; }
+
+  .cat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 18px; }
+  .cat-card{ background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:18px 14px; text-align:center; cursor:pointer; font-family:'Tajawal',sans-serif; }
+  .cat-card .cat-name{ font-size:14px; font-weight:800; color:var(--charcoal); }
+  .cat-card .cat-count{ font-size:11px; color:var(--ink-soft); margin-top:4px; }
+
+  .camp-rail{ display:flex; gap:9px; overflow-x:auto; padding:2px 18px 4px; scrollbar-width:none; }
+  .camp-rail::-webkit-scrollbar{display:none;}
+  .camp-pill{ flex-shrink:0; background:var(--paper-raised); border:1px solid var(--line); border-radius:11px; padding:10px 14px; font-size:12.5px; font-weight:700; color:var(--charcoal); }
+
+  .stats-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 18px; }
+  .stat-card{ background:var(--charcoal); color:#F7F5F2; border-radius:14px; padding:16px 14px; }
+  .stat-num{ font-family:'Markazi Text',serif; font-size:28px; font-weight:700; color:var(--red); line-height:1; }
+  .stat-label{ font-size:12px; margin-top:6px; opacity:.85; line-height:1.4; }
+  .stats-note{ font-size:10.5px; color:var(--ink-soft); margin:12px 18px 0; text-align:center; }
 
   nav.bottom{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:var(--paper-raised); border-top:1px solid var(--line); display:flex; padding:9px 6px 12px; z-index:30; }
-  .nav-item{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:10.5px; color:var(--ink-soft); font-weight:700; }
+  .nav-item{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:10.5px; color:var(--ink-soft); font-weight:700; background:none; border:none; font-family:'Tajawal',sans-serif; padding:4px 0; }
   .nav-item.active{ color:var(--red); }
   .nav-icon{ width:21px; height:21px; }
 
@@ -93,58 +121,107 @@
     </div>
   </header>
 
-  <section class="section">
-    <div class="section-head"><span class="section-title">الخبر الرئيسي</span></div>
-    <div id="featured-slot">
-      <div class="featured">
-        <div class="skel skel-featured"></div>
-        <div class="featured-body">
-          <div class="skel skel-line" style="width:92%"></div>
-          <div class="skel skel-line" style="width:60%"></div>
+  <!-- ===== HOME VIEW ===== -->
+  <div id="view-home" class="view active">
+    <div class="chip-row" id="chip-row"></div>
+
+    <section class="section">
+      <div class="section-head"><span class="section-title">الخبر الرئيسي</span></div>
+      <div id="featured-slot">
+        <div class="featured">
+          <div class="skel skel-featured"></div>
+          <div class="featured-body">
+            <div class="skel skel-line" style="width:92%"></div>
+            <div class="skel skel-line" style="width:60%"></div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="section-head">
-      <span class="section-title">آخر الأخبار</span>
-      <a class="section-link" href="https://actionpal.org.uk/post/category/news" target="_blank" rel="noopener">عرض الكل</a>
-    </div>
-    <div id="news-list">
-      <div class="article"><a><div class="skel skel-thumb"></div><div class="article-body"><div class="skel skel-line" style="width:40%"></div><div class="skel skel-line" style="width:95%"></div><div class="skel skel-line" style="width:70%"></div></div></a></div>
-    </div>
-  </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="section-title" id="list-title">آخر الأخبار</span>
+        <a class="section-link" href="https://actionpal.org.uk" target="_blank" rel="noopener">الموقع الكامل</a>
+      </div>
+      <div id="news-list">
+        <div class="article"><a><div class="skel skel-thumb"></div><div class="article-body"><div class="skel skel-line" style="width:40%"></div><div class="skel skel-line" style="width:95%"></div><div class="skel skel-line" style="width:70%"></div></div></a></div>
+      </div>
+    </section>
+  </div>
 
-  <section class="section" style="margin-top:8px;">
-    <div class="about-card">
-      <img src="/logo.png" alt="شعار المنظمة">
-      <div class="org-ar">مجموعة العمل من أجل فلسطينيي سورية</div>
-      <div class="org-en">Action Group For Palestinians of Syria</div>
+  <!-- ===== CATEGORIES VIEW ===== -->
+  <div id="view-categories" class="view">
+    <section class="section">
+      <div class="section-head"><span class="section-title">التصنيفات</span></div>
+    </section>
+    <div class="cat-grid" id="cat-grid"></div>
+
+    <section class="section" style="margin-top:22px;">
+      <div class="section-head"><span class="section-title">تصفح أخبار المخيمات</span></div>
+    </section>
+    <div class="camp-rail">
+      <div class="camp-pill">مخيم اليرموك</div>
+      <div class="camp-pill">مخيم خان الشيح</div>
+      <div class="camp-pill">مخيم جرمانا</div>
+      <div class="camp-pill">مخيم النيرب</div>
+      <div class="camp-pill">مخيم درعا</div>
+      <div class="camp-pill">مخيم حمص</div>
     </div>
-  </section>
+  </div>
+
+  <!-- ===== STATS VIEW ===== -->
+  <div id="view-stats" class="view">
+    <section class="section">
+      <div class="section-head"><span class="section-title">لمحة عن أرشيفنا</span></div>
+    </section>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-num">1,240+</div><div class="stat-label">انتهاك موثّق</div></div>
+      <div class="stat-card"><div class="stat-num">3,600+</div><div class="stat-label">بيان ومادة موثّقة في الأرشيف</div></div>
+      <div class="stat-card"><div class="stat-num">380+</div><div class="stat-label">معتقل ومفقود موثّق</div></div>
+      <div class="stat-card"><div class="stat-num">210+</div><div class="stat-label">تقرير منشور</div></div>
+    </div>
+    <div class="stats-note">أرقام توضيحية لأغراض العرض — للأرقام الفعلية راجع الموقع الرسمي</div>
+  </div>
+
+  <!-- ===== ABOUT VIEW ===== -->
+  <div id="view-about" class="view">
+    <section class="section">
+      <div class="about-card">
+        <img src="/logo.png" alt="شعار المنظمة">
+        <div class="org-ar">مجموعة العمل من أجل فلسطينيي سورية</div>
+        <div class="org-en">Action Group For Palestinians of Syria</div>
+      </div>
+      <div class="about-desc">
+        منظمة حقوقية وإعلامية مستقلة تُعنى برصد وتوثيق أوضاع فلسطينيي سورية في سورية ودول اللجوء، وإصدار التقارير والبيانات المتعلقة بحقوقهم الإنسانية.
+      </div>
+      <div class="about-links">
+        <a class="about-link-btn" href="https://actionpal.org.uk" target="_blank" rel="noopener">الموقع الرسمي <span class="arrow">←</span></a>
+        <a class="about-link-btn" href="https://actionpal.org.uk/contact-us" target="_blank" rel="noopener">تواصل معنا <span class="arrow">←</span></a>
+      </div>
+    </section>
+  </div>
 
   <footer class="credit">
-    البيانات تُجلب عبر خادم وسيط خاص بالتطبيق يتصل بـ actionpal.org.uk من جهة الخادم، فلا تخضع لقيود CORS التي تواجه الاتصال المباشر من المتصفح.
+    البيانات تُجلب عبر خادم وسيط خاص بالتطبيق يتصل بـ actionpal.org.uk من جهة الخادم.
   </footer>
 
   <nav class="bottom">
-    <div class="nav-item active">
+    <button class="nav-item active" data-view="home">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>
       الرئيسية
-    </div>
-    <div class="nav-item">
+    </button>
+    <button class="nav-item" data-view="categories">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
       التصنيفات
-    </div>
-    <div class="nav-item">
+    </button>
+    <button class="nav-item" data-view="stats">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-7"/></svg>
       إحصائيات
-    </div>
-    <div class="nav-item">
+    </button>
+    <button class="nav-item" data-view="about">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
       من نحن
-    </div>
+    </button>
   </nav>
 
 </div>
@@ -153,12 +230,22 @@
 const statusText = document.getElementById('status-text');
 const featuredSlot = document.getElementById('featured-slot');
 const newsList = document.getElementById('news-list');
+const chipRow = document.getElementById('chip-row');
+const catGrid = document.getElementById('cat-grid');
+const listTitle = document.getElementById('list-title');
+
+let allPosts = [];
+let activeCategory = 'الكل';
 
 function formatDateAr(dateStr){
   return new Date(dateStr).toLocaleDateString('ar-EG', { year:'numeric', month:'long', day:'numeric' });
 }
 
 function renderFeatured(post){
+  if(!post){
+    featuredSlot.innerHTML = '<div class="empty-note">لا توجد أخبار في هذا التصنيف حالياً</div>';
+    return;
+  }
   const bg = post.image ? `style="background-image:url('${post.image}')"` : '';
   featuredSlot.innerHTML = `
     <a href="${post.link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
@@ -177,6 +264,10 @@ function renderFeatured(post){
 }
 
 function renderList(posts){
+  if(posts.length === 0){
+    newsList.innerHTML = '';
+    return;
+  }
   newsList.innerHTML = posts.map(post => {
     const bg = post.image ? `style="background-image:url('${post.image}')"` : '';
     return `
@@ -191,6 +282,49 @@ function renderList(posts){
         </a>
       </div>`;
   }).join('');
+}
+
+function applyFilter(){
+  const filtered = activeCategory === 'الكل'
+    ? allPosts
+    : allPosts.filter(p => p.category === activeCategory);
+
+  listTitle.textContent = activeCategory === 'الكل' ? 'آخر الأخبار' : 'أخبار: ' + activeCategory;
+  renderFeatured(filtered[0]);
+  renderList(filtered.slice(1, 6));
+
+  // sync chip active state
+  document.querySelectorAll('.chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.cat === activeCategory);
+  });
+}
+
+function buildChipsAndCats(){
+  const cats = ['الكل', ...new Set(allPosts.map(p => p.category))];
+  chipRow.innerHTML = cats.map(c =>
+    `<button class="chip ${c===activeCategory?'active':''}" data-cat="${c}">${c}</button>`
+  ).join('');
+  chipRow.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      activeCategory = chip.dataset.cat;
+      applyFilter();
+    });
+  });
+
+  catGrid.innerHTML = cats.filter(c => c !== 'الكل').map(c => {
+    const count = allPosts.filter(p => p.category === c).length;
+    return `<div class="cat-card" data-cat="${c}">
+      <div class="cat-name">${c}</div>
+      <div class="cat-count">${count} خبر</div>
+    </div>`;
+  }).join('');
+  catGrid.querySelectorAll('.cat-card').forEach(card => {
+    card.addEventListener('click', () => {
+      activeCategory = card.dataset.cat;
+      applyFilter();
+      switchView('home');
+    });
+  });
 }
 
 function renderError(message){
@@ -212,12 +346,26 @@ async function loadNews(){
     }
     const sourceLabel = { live:'متصل مباشرة', cache:'من الذاكرة المؤقتة', 'stale-cache':'آخر نسخة محفوظة (تعذّر التحديث)' }[data.source] || '';
     statusText.textContent = `${sourceLabel} — آخر تحديث ${new Date().toLocaleTimeString('ar-EG')}`;
-    renderFeatured(data.posts[0]);
-    renderList(data.posts.slice(1, 6));
+    allPosts = data.posts;
+    buildChipsAndCats();
+    applyFilter();
   }catch(e){
     renderError(e.message);
   }
 }
+
+// ===== Bottom nav view switching =====
+function switchView(name){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === name);
+  });
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
 
 loadNews();
 </script>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>مجموعة العمل من أجل فلسطينيي سورية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF9F7; --paper-raised:#FFFFFF; --ink:#2A2A2A; --ink-soft:#767672;
+    --red:#D4090C; --red-deep:#A5070A; --charcoal:#2F2F2F; --line:#E7E4DF; --line-soft:#F0EEEA;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--paper); color:var(--ink); font-family:'Tajawal',sans-serif; -webkit-font-smoothing:antialiased; }
+  .app{ max-width:430px; margin:0 auto; min-height:100vh; background:var(--paper); display:flex; flex-direction:column; position:relative; padding-bottom:76px; }
+
+  header.top{ position:sticky; top:0; z-index:20; background:var(--paper-raised); padding:16px 18px 14px; border-bottom:1px solid var(--line); }
+  .top-row{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{ width:38px; height:38px; flex-shrink:0; }
+  .brand-mark img{ width:100%; height:100%; object-fit:contain; }
+  .brand-text .name{ font-size:14.5px; font-weight:800; color:var(--charcoal); }
+  .brand-text .sub{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+  .live-badge{ display:flex; align-items:center; gap:5px; font-size:10.5px; font-weight:700; color:var(--red); background:#FCE9E9; padding:4px 9px; border-radius:999px; }
+  .live-dot{ width:6px; height:6px; border-radius:50%; background:var(--red); animation:pulse 1.6s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+  .status-line{ margin-top:10px; font-size:10.5px; color:var(--ink-soft); display:flex; align-items:center; justify-content:space-between; }
+  .status-line a{ color:var(--red); font-weight:700; text-decoration:none; }
+
+  .section{ padding:6px 18px 4px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin:18px 0 12px; }
+  .section-title{ font-family:'Markazi Text',serif; font-size:23px; font-weight:700; color:var(--charcoal); }
+  .section-link{ font-size:12px; font-weight:700; color:var(--red); text-decoration:none; }
+
+  .featured{ border-radius:16px; overflow:hidden; background:var(--paper-raised); border:1px solid var(--line-soft); }
+  .featured-img{ height:168px; background-size:cover; background-position:center; background-color:var(--charcoal); position:relative; display:flex; align-items:flex-end; }
+  .featured-tag{ position:absolute; top:12px; right:12px; background:var(--red); color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:6px; }
+  .featured-body{ padding:14px 15px 16px; }
+  .featured-body h3{ font-family:'Markazi Text',serif; font-size:19.5px; line-height:1.35; font-weight:700; margin:0 0 8px; color:var(--ink); }
+  .meta-row{ display:flex; align-items:center; gap:10px; font-size:11.5px; color:var(--ink-soft); }
+  .dot{ width:3px; height:3px; border-radius:50%; background:var(--ink-soft); }
+
+  .article{ padding:13px 0; border-bottom:1px solid var(--line-soft); }
+  .article:last-child{ border-bottom:none; }
+  .article a{ display:flex; gap:12px; text-decoration:none; color:inherit; width:100%; }
+  .article-thumb{ width:76px; height:76px; border-radius:11px; flex-shrink:0; background-size:cover; background-position:center; background-color:var(--charcoal); }
+  .article-body{ flex:1; min-width:0; }
+  .article-tag{ font-size:10.5px; font-weight:800; color:var(--red); margin-bottom:4px; display:block; }
+  .article-title{ font-size:14px; font-weight:700; line-height:1.42; color:var(--ink); margin:0 0 5px; }
+  .article-date{ font-size:11px; color:var(--ink-soft); }
+
+  .skel{ background:linear-gradient(90deg,var(--line-soft) 25%,var(--line) 37%,var(--line-soft) 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; border-radius:8px; }
+  @keyframes shimmer{ 0%{background-position:100% 50%;} 100%{background-position:0 50%;} }
+  .skel-line{ height:12px; margin-bottom:8px; }
+  .skel-thumb{ width:76px; height:76px; border-radius:11px; flex-shrink:0; }
+  .skel-featured{ height:168px; border-radius:16px 16px 0 0; }
+
+  .error-box{ text-align:center; padding:26px 16px; background:var(--paper-raised); border:1px dashed var(--line); border-radius:14px; color:var(--ink-soft); font-size:13px; line-height:1.7; }
+  .error-box .retry{ display:inline-block; margin-top:12px; background:var(--red); color:#fff; padding:8px 18px; border-radius:9px; font-size:12.5px; font-weight:700; text-decoration:none; }
+
+  .about-card{ margin:6px 18px 0; background:var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:22px 16px; text-align:center; }
+  .about-card img{ width:96px; margin:0 auto 12px; display:block; }
+  .about-card .org-ar{ font-size:16px; font-weight:800; color:var(--charcoal); line-height:1.4; }
+  .about-card .org-en{ font-size:11.5px; color:var(--ink-soft); margin-top:4px; }
+
+  nav.bottom{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:var(--paper-raised); border-top:1px solid var(--line); display:flex; padding:9px 6px 12px; z-index:30; }
+  .nav-item{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:10.5px; color:var(--ink-soft); font-weight:700; }
+  .nav-item.active{ color:var(--red); }
+  .nav-icon{ width:21px; height:21px; }
+
+  footer.credit{ text-align:center; font-size:10px; color:var(--ink-soft); padding:16px 18px 8px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="top-row">
+      <div class="brand">
+        <div class="brand-mark"><img src="/logo.png" alt="شعار مجموعة العمل"></div>
+        <div class="brand-text">
+          <div class="name">مجموعة العمل</div>
+          <div class="sub">من أجل فلسطينيي سورية</div>
+        </div>
+      </div>
+      <div class="live-badge"><span class="live-dot"></span>مباشر</div>
+    </div>
+    <div class="status-line">
+      <span id="status-text">جارٍ التحميل من الخادم…</span>
+      <a href="https://actionpal.org.uk" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-head"><span class="section-title">الخبر الرئيسي</span></div>
+    <div id="featured-slot">
+      <div class="featured">
+        <div class="skel skel-featured"></div>
+        <div class="featured-body">
+          <div class="skel skel-line" style="width:92%"></div>
+          <div class="skel skel-line" style="width:60%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="section-title">آخر الأخبار</span>
+      <a class="section-link" href="https://actionpal.org.uk/post/category/news" target="_blank" rel="noopener">عرض الكل</a>
+    </div>
+    <div id="news-list">
+      <div class="article"><a><div class="skel skel-thumb"></div><div class="article-body"><div class="skel skel-line" style="width:40%"></div><div class="skel skel-line" style="width:95%"></div><div class="skel skel-line" style="width:70%"></div></div></a></div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-top:8px;">
+    <div class="about-card">
+      <img src="/logo.png" alt="شعار المنظمة">
+      <div class="org-ar">مجموعة العمل من أجل فلسطينيي سورية</div>
+      <div class="org-en">Action Group For Palestinians of Syria</div>
+    </div>
+  </section>
+
+  <footer class="credit">
+    البيانات تُجلب عبر خادم وسيط خاص بالتطبيق يتصل بـ actionpal.org.uk من جهة الخادم، فلا تخضع لقيود CORS التي تواجه الاتصال المباشر من المتصفح.
+  </footer>
+
+  <nav class="bottom">
+    <div class="nav-item active">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>
+      الرئيسية
+    </div>
+    <div class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+      التصنيفات
+    </div>
+    <div class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-7"/></svg>
+      إحصائيات
+    </div>
+    <div class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+      من نحن
+    </div>
+  </nav>
+
+</div>
+
+<script>
+const statusText = document.getElementById('status-text');
+const featuredSlot = document.getElementById('featured-slot');
+const newsList = document.getElementById('news-list');
+
+function formatDateAr(dateStr){
+  return new Date(dateStr).toLocaleDateString('ar-EG', { year:'numeric', month:'long', day:'numeric' });
+}
+
+function renderFeatured(post){
+  const bg = post.image ? `style="background-image:url('${post.image}')"` : '';
+  featuredSlot.innerHTML = `
+    <a href="${post.link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+      <div class="featured">
+        <div class="featured-img" ${bg}><span class="featured-tag">${post.category}</span></div>
+        <div class="featured-body">
+          <h3>${post.title}</h3>
+          <div class="meta-row">
+            <span>${formatDateAr(post.date)}</span>
+            <span class="dot"></span>
+            <span>actionpal.org.uk</span>
+          </div>
+        </div>
+      </div>
+    </a>`;
+}
+
+function renderList(posts){
+  newsList.innerHTML = posts.map(post => {
+    const bg = post.image ? `style="background-image:url('${post.image}')"` : '';
+    return `
+      <div class="article">
+        <a href="${post.link}" target="_blank" rel="noopener">
+          <div class="article-thumb" ${bg}></div>
+          <div class="article-body">
+            <span class="article-tag">${post.category}</span>
+            <p class="article-title">${post.title}</p>
+            <span class="article-date">${formatDateAr(post.date)}</span>
+          </div>
+        </a>
+      </div>`;
+  }).join('');
+}
+
+function renderError(message){
+  statusText.textContent = 'تعذّر جلب الأخبار';
+  featuredSlot.innerHTML = `
+    <div class="error-box">
+      ${message || 'تعذّر الاتصال بالخادم.'}
+      <br><a class="retry" href="javascript:location.reload()">إعادة المحاولة</a>
+    </div>`;
+  newsList.innerHTML = '';
+}
+
+async function loadNews(){
+  try{
+    const res = await fetch('/api/news');
+    const data = await res.json();
+    if(!res.ok || !data.posts || data.posts.length === 0){
+      throw new Error(data.error || 'لا توجد بيانات');
+    }
+    const sourceLabel = { live:'متصل مباشرة', cache:'من الذاكرة المؤقتة', 'stale-cache':'آخر نسخة محفوظة (تعذّر التحديث)' }[data.source] || '';
+    statusText.textContent = `${sourceLabel} — آخر تحديث ${new Date().toLocaleTimeString('ar-EG')}`;
+    renderFeatured(data.posts[0]);
+    renderList(data.posts.slice(1, 6));
+  }catch(e){
+    renderError(e.message);
+  }
+}
+
+loadNews();
+</script>
+</body>
+</html>
